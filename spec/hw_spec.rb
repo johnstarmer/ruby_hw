@@ -2,8 +2,8 @@
 require File.expand_path '../spec_helper.rb', __FILE__
 
 describe "My Sinatra Application" do
-  it "should allow accessing the home page" do
+  it "expect accessing the home page to be successful" do
     get '/'
-    last_response.should be_ok
+    expect(last_response).to be_ok
   end
 end
