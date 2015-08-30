@@ -7,6 +7,7 @@ GEM
       rack
     rack-test (0.6.1)
       rack (>= 1.0)
+    rake (10.4.2)
     rspec (3.1.0)
       rspec-core (~> 3.1.0)
       rspec-expectations (~> 3.1.0)
@@ -30,5 +31,9 @@ PLATFORMS
 
 DEPENDENCIES
   rack-test
+  rake
   rspec
   sinatra
+
+BUNDLED WITH
+   1.10.6
