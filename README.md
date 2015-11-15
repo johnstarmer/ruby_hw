@@ -1,4 +1,4 @@
-ruby_hw
+ruby\_hw
 =======
 
 A simple Ruby Hello World app leveraging Sinatra
