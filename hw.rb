@@ -2,5 +2,5 @@
 require 'sinatra'
 
 get '/' do
-  "Hello CCS World!"
+  "Hello World! It's a brave new one!!!"
 end
