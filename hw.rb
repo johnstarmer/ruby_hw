@@ -2,7 +2,7 @@
 require 'sinatra'
 
 get '/:name' do
-  name="World"
+  @name=params['name']
   erb :index
 end
 
