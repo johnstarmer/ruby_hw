@@ -22,7 +22,7 @@ sudo yum install -y mod_passenger
 
 sudo tee /etc/httpd/conf.d/ruby_hw.conf > /dev/null <<EOF
 <VirtualHost *:80>
-    ServerName *
+    ServerName localhost
 
     # Tell Apache and Passenger where your app's 'public' directory is
     DocumentRoot /var/www/ruby_hw/public
