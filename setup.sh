@@ -20,7 +20,7 @@ sudo yum install -y mod_passenger
 
 # create our app configuration:
 
-sudo cat > /etc/httpd/conf.d/ruby_hw.conf <<EOF
+sudo tee /etc/httpd/conf.d/ruby_hw.conf > /dev/null <<EOF
 <VirtualHost *:80>
     ServerName *
 
