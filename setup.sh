@@ -43,3 +43,8 @@ sudo tee /etc/httpd/conf.d/ruby_hw.conf > /dev/null <<EOF
 EOF
 
 sudo systemctl restart httpd.service
+
+
+# Update firewall on centos to allow http/https
+sudo firewall-cmd --permanent --zone=public --add-service=http
+sudo firewall-cmd --permanent --zone=public --add-service=https
