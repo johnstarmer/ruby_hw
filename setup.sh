@@ -41,6 +41,6 @@ EOF
 sudo git clone https://github.com/rstarmer/ruby_hw /var/www/ruby_hw
 sudo chown -R centos: /var/www/ruby_hw
 
-$(cd /var/www/ruby_hw; bundle install)
+(cd /var/www/ruby_hw; /usr/local/bin/bundle install)
 
 sudo systemctl restart httpd.service
