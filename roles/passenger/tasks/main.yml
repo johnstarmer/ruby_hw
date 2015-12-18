@@ -1,0 +1,29 @@
+---
+# tasks file for passenger
+- name: Install ruby-devel
+  yum: name=ruby-devel state=present
+  when: ansible_os_family == 'RedHat'
+
+- name: Install ruby-gems
+  yum: name=rubygems state=present
+  when: ansible_os_family == 'RedHat'
+
+- name: Install epel-release
+  yum: name=epel-release state=present
+  when: ansible_os_family == 'RedHat'
+
+- name: Install pygpgme
+  yum: name=pygpgme state=present
+  when: ansible_os_family == 'RedHat'
+
+
+
+- name: Get repository from Phusionsoft
+  get_url:
+    dest: /etc/yum.repos.d/passenger.repo
+    url: https://oss-binaries.phusionpassenger.com/yum/definitions/el-passenger.repo
+  when: ansible_os_family == 'RedHat'
+
+- name: Install passenger
+  yum: name=mod_passenger state=present
+  when: ansible_os_family == 'RedHat'
