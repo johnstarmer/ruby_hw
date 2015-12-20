@@ -2,7 +2,7 @@
 
 #Install prerequisites
 
-sudo yum install -y git httpd ruby-devel rubygems epel-release pygpgme curl
+sudo yum install -y git httpd ruby-devel rubygems rubygems-bundler epel-release pygpgme curl
 
 # Add the phusionsoft passenger RPM repository so that we can install the
 # Apache passenger module
@@ -20,13 +20,14 @@ sudo yum install -y mod_passenger
 sudo git clone https://github.com/rstarmer/ruby_hw -b develop /var/www/ruby_hw
 sudo chown -R centos: /var/www/ruby_hw
 
-# Install the bundler gem so that we can acquire our ruby libraries
-sudo gem install bundler
-(cd /var/www/ruby_hw; /usr/local/bin/bundle install --deployment --without development test)
+(cd /var/www/ruby_hw; bundle install --deployment --without development test)
 
+# get IP address from eth0
+ip_address=`ip a s eth0 | grep 'inet ' | head -n 1 | awk '/ inet / {print $2}' | cut -d\/ -f1`
 sudo tee /etc/httpd/conf.d/ruby_hw.conf > /dev/null <<EOF
 <VirtualHost *:80>
     ServerName localhost
+    ServerAlias ${ip_address}
 
     # Tell Apache and Passenger where your app's 'public' directory is
     DocumentRoot /var/www/ruby_hw/public
