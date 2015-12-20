@@ -1,2 +1,1 @@
 [passenger]
-159.203.220.118 ansible_connection=ssh ansible_ssh_user=root

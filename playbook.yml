@@ -61,6 +61,7 @@
   - name: Install bundler package
     yum: name=rubygem-bundler state=present
 
+  # requires ansible > 2.1
   # - name: bundle install the required gem files
   #   bundler: chdir=/var/www/ruby_hw state=present executable=/usr/local/bin/bundle deployment=yes
 
