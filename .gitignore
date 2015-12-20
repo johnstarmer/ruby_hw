@@ -1,5 +1,8 @@
 *.gem
 *.rbc
+/.terraform
+terraform.tfstate.backup
+variables.tf
 /.config
 /coverage/
 /InstalledFiles

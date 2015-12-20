@@ -16,14 +16,17 @@
   yum: name=pygpgme state=present
   when: ansible_os_family == 'RedHat'
 
-
-
 - name: Get repository from Phusionsoft
   get_url:
     dest: /etc/yum.repos.d/passenger.repo
     url: https://oss-binaries.phusionpassenger.com/yum/definitions/el-passenger.repo
   when: ansible_os_family == 'RedHat'
 
+# needs newer ansilbe (> 2.1)
+# - name: Install passenger
+#   yum: name=mod_passenger state=present disable_gpg_check=yes validate_certs=no
+#   when: ansible_os_family == 'RedHat'
+
 - name: Install passenger
-  yum: name=mod_passenger state=present
+  command: yum install mod_passenger -y
   when: ansible_os_family == 'RedHat'

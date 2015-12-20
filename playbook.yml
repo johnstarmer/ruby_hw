@@ -10,6 +10,9 @@
     service: name=httpd state=reloaded
 
   pre_tasks:
+  - name: create user
+    user: name=web shell=/bin/bash groups=wheel createhome=yes state=present append=yes
+
   - name: install git
     yum: name=git state=present
 
@@ -25,19 +28,12 @@
   - name: install apache
     yum: name=httpd state=present
 
-  # tasks:
-  # - name: add firewalld
-  #   yum: name=firewalld state=present
-  #
-  # - name: start the firewalld services
-  #   service: name=firewalld state=started
-  #
-  # - name: adjust firewall http
-  #   firewalld: service=http permanent=true state=enabled
-  #
-  # - name: adjust firewall https
-  #   firewalld: service=https permanent=true state=enabled
-  #
+  tasks:
+  - name: add firewalld
+    yum: name=firewalld state=present
+
+  - name: start the firewalld services
+    service: name=firewalld state=started
 
   - name: Add http access
     command: firewall-cmd --zone=public --add-service=http
@@ -58,12 +54,19 @@
     git: clone=yes dest=/var/www/ruby_hw repo=https://github.com/rstarmer/ruby_hw remote=develop
 
   - name: change directory ownership
-    file: owner=centos recurse=yes path=/var/www/ruby_hw
+    file: owner=web recurse=yes path=/var/www/ruby_hw
+    notify:
+      - reload apache
+
+  - name: Install bundler package
+    yum: name=rubygem-bundler state=present
 
   # - name: bundle install the required gem files
   #   bundler: chdir=/var/www/ruby_hw state=present executable=/usr/local/bin/bundle deployment=yes
+
   - name: Install via bundler
-    command: /usr/local/bin/bundle install --deployment --without development test
+    command: bundle install --deployment --without development test
       chdir=/var/www/ruby_hw
+    become_user: web
     notify:
       - reload apache
