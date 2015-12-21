@@ -2,7 +2,7 @@
 
 #Install prerequisites
 
-sudo yum install -y git httpd ruby-devel rubygems rubygems-bundler epel-release pygpgme curl
+sudo yum install -y git httpd ruby-devel rubygems rubygem-bundler epel-release pygpgme curl
 
 # Add the phusionsoft passenger RPM repository so that we can install the
 # Apache passenger module
@@ -12,16 +12,13 @@ sudo curl --fail -sSLo /etc/yum.repos.d/passenger.repo \
 # Install Passenger + Apache module
 sudo yum install -y mod_passenger
 
-# get the ruby environment from passenger
-# export ruby-cmd=`passenger-config about ruby-command | awk '/Command:/ {print $2}' | head -1`
-
 # create our app configuration:
 
 sudo git clone https://github.com/rstarmer/ruby_hw -b develop /var/www/ruby_hw
 sudo chown -R centos: /var/www/ruby_hw
 
 # Bundle the ruby gems from the applicationg GemFile
-(cd /var/www/ruby_hw; /usr/local/bin/bundle install --deployment --without development test)
+(cd /var/www/ruby_hw; bundle install --deployment --without development test)
 
 sudo tee /etc/httpd/conf.d/ruby_hw.conf > /dev/null <<EOF
 <VirtualHost *:80>
