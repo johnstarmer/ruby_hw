@@ -12,9 +12,6 @@ sudo curl --fail -sSLo /etc/yum.repos.d/passenger.repo \
 # Install Passenger + Apache module
 sudo yum install -y mod_passenger
 
-# get the ruby environment from passenger
-# export ruby-cmd=`passenger-config about ruby-command | awk '/Command:/ {print $2}' | head -1`
-
 # create our app configuration:
 
 sudo git clone https://github.com/rstarmer/ruby_hw -b develop /var/www/ruby_hw
