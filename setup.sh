@@ -2,7 +2,7 @@
 
 #Install prerequisites
 
-sudo yum install -y git httpd ruby-devel rubygems rubygems-bundler epel-release pygpgme curl
+sudo yum install -y git httpd ruby-devel rubygems rubygem-bundler epel-release pygpgme curl
 
 # Add the phusionsoft passenger RPM repository so that we can install the
 # Apache passenger module
