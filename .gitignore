@@ -2,6 +2,7 @@
 *.rbc
 /.terraform
 terraform.tfstate.backup
+terraform.tfstate
 variables.tf
 /.config
 /coverage/

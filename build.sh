@@ -2,11 +2,13 @@
 
 terraform plan
 
-if [[ $? eq 0 ]]; then
+if [[ $? -eq 0 ]]; then
   terraform apply
 fi
 
-if [[ $? ]]; then
+sleep 15
+
+if [[ $? -eq 0 ]]; then
   ansible-playbook playbook.yml -i inventory
 fi
 
