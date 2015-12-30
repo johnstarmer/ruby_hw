@@ -58,7 +58,7 @@ resource "digitalocean_record" "ruby-hw" {
 #   flavor_id = "3"
 #   key_pair = "rhs"
 #    provisioner "local-exec" {
-#      command = "echo ${openstack_compute_instance_v2.ruby-os.access_ip_v4} ansible_connection=ssh ansible_ssh_user=root >> inventory"
+#      command = "echo ${openstack_compute_instance_v2.ruby-os.access_ip_v4} ansible_connection=ssh ansible_ssh_user=centos >> inventory"
 #    }
 # }
 #
@@ -68,7 +68,9 @@ resource "digitalocean_record" "ruby-hw" {
 # support.  Note that this is one of the values of Terraform, the ability
 # to leverage multiple services as desired.
 
-# resource "digitalocean_domain" "ruby-os" {
-#   name = "ruby-os.opsits.com"
-#   ip_address = "${openstack_compute_instance_v2.ruby-os.access_ip_v4}"
+# resource "digitalocean_record" "ruby-os" {
+#     domain = "opsits.com"
+#     type = "A"
+#     name = "ruby-os"
+#     value = "${openstack_compute_instance_v2.ruby-os.access_ip_v4}"
 # }

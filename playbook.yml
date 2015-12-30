@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: passenger
   sudo: yes
 
   roles:
@@ -22,8 +22,8 @@
   - name: rubygems
     yum: name=rubygems state=present
 
-  - name: install bundler gem
-    gem: name=bundler state=present
+  - name: Install bundler package
+    yum: name=rubygem-bundler state=present
 
   - name: install apache
     yum: name=httpd state=present
@@ -58,8 +58,6 @@
     notify:
       - reload apache
 
-  - name: Install bundler package
-    yum: name=rubygem-bundler state=present
 
   # requires ansible > 2.1
   # - name: bundle install the required gem files
