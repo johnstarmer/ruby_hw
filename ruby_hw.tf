@@ -29,11 +29,16 @@ resource "digitalocean_droplet" "ruby-hw" {
 # Note that the default TTYL is 1800 seconds, so it will take
 # up to 30 minutes in this enviornment for the record to time out.
 
+resource "digitalocean_floating_ip" "ruby-hw-ip" {
+    droplet_id = "${digitalocean_droplet.ruby-hw.id}"
+    region = "${digitalocean_droplet.ruby-hw.region}"
+}
+
 resource "digitalocean_record" "ruby-hw" {
     domain = "opsits.com"
     type = "A"
     name = "ruby-hw"
-    value = "${digitalocean_droplet.ruby-hw.ipv4_address}"
+    value = "${digitalocean_floating_ip.ruby-hw-ip.ip_address}"
 }
 
 # For OpenStack, as with Digital Ocean, access credentials are needed

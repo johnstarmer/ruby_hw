@@ -53,6 +53,15 @@
   - name: Get project from git
     git: clone=yes dest=/var/www/ruby_hw repo=https://github.com/rstarmer/ruby_hw remote=develop
 
+  - name: Ensure .ssh director for web user
+    file: state=directory owner=web recurse=yes path=/home/web/.ssh mode=0700
+
+  - name: Add ssh public key for travis-CI deployment
+    shell: cat /var/www/ruby_hw/travis.pub >> /home/web/.ssh/authorized_keys
+
+  - name: Ensure authroized_keys for web user
+    file: state=file owner=web path=/home/web/.ssh/authorized_keys mode=0600
+
   - name: change directory ownership
     file: owner=web recurse=yes path=/var/www/ruby_hw
     notify:
