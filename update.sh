@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /var/www/ruby_hw
+cd /home/app/ruby_hw
 git pull
-mkdir /var/www/ruby_hw/tmp
-touch /var/www/ruby_hw/tmp/restart.txt
+mkdir /home/app/ruby_hw/tmp
+touch /home/app/ruby_hw/tmp/restart.txt
