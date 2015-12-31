@@ -12,7 +12,7 @@ RUN rm /etc/nginx/sites-enabled/default
 ADD ruby-hw.conf /etc/nginx/sites-enabled/ruby-hw.conf
 
 
-RUN sudo -u app -H git clone https://github.com/rstarmer/ruby_hw -b develop /home/app/ruby_hw
+RUN sudo -u app -H git clone https://github.com/rstarmer/ruby_hw -b docker /home/app/ruby_hw
 WORKDIR /home/app/ruby_hw
 RUN sudo -u app -H bundle install --path vendor/bundle
 
