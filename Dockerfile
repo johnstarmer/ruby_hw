@@ -40,7 +40,8 @@ CMD ["/sbin/my_init"]
 RUN rm /etc/nginx/sites-enabled/default
 ADD ruby-hw.conf /etc/nginx/sites-enabled/ruby-hw.conf
 
-RUN git clone https://github.com/rstarmer/ruby_hw -b develop /home/app/
+
+RUN git clone https://github.com/rstarmer/ruby_hw -b develop /home/app/ruby_hw
 RUN chown -R app.app /home/app/
 RUN rm -f /etc/service/nginx/down
 
