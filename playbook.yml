@@ -51,7 +51,7 @@
       - reload apache
 
   - name: Get project from git
-    git: clone=yes dest=/var/www/ruby_hw repo=https://github.com/rstarmer/ruby_hw remote=develop
+    git: clone=yes dest=/var/www/ruby_hw repo=https://github.com/rstarmer/ruby_hw version=travisci
 
   - name: Ensure .ssh director for web user
     file: state=directory owner=web recurse=yes path=/home/web/.ssh mode=0700
