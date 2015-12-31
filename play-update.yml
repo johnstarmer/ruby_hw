@@ -1,0 +1,14 @@
+---
+- hosts: all
+  sudo: no
+
+  tasks:
+  - name: application container
+    docker:
+      name: ruby-hw
+      image: rstarmer/ruby-hw
+      state: reloaded
+      pull: always
+      ports:
+      - "80:80"
+      - "22:2222"

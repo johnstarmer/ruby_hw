@@ -1,80 +1,51 @@
 ---
-- hosts: passenger
-  sudo: yes
+- hosts: all
+  sudo: no
 
-  roles:
-    - passenger
-
-  handlers:
-  - name: reload apache
-    service: name=httpd state=reloaded
-
-  pre_tasks:
-  - name: create user
-    user: name=web shell=/bin/bash groups=wheel createhome=yes state=present append=yes
-
-  - name: install git
-    yum: name=git state=present
-
-  - name: ruby
-    yum: name=ruby-devel state=present
-
-  - name: rubygems
-    yum: name=rubygems state=present
-
-  - name: Install bundler package
-    yum: name=rubygem-bundler state=present
-
-  - name: install apache
-    yum: name=httpd state=present
-
+####
   tasks:
-  - name: add firewalld
-    yum: name=firewalld state=present
+  - name: Install dependencies
+    apt:
+        name={{ item }}
+        update_cache=yes
+    with_items:
+        - python-dev
+        - python-setuptools
 
-  - name: start the firewalld services
-    service: name=firewalld state=started
+  - name: Install pip
+    easy_install:
+        name=pip
 
-  - name: Add http access
-    command: firewall-cmd --zone=public --add-service=http
+  - name: Install docker-py
+    pip:
+        name=docker-py
+        state=present
+        version=1.1.0
 
-  - name: Copy across new virtual host
-    template:
-      src=templates/ruby_hw.conf.j2
-      dest=/etc/httpd/conf.d/ruby_hw.conf
-    notify:
-      - reload apache
+#####
+  - name: Add docker apt repo
+    apt_repository:
+        repo='deb https://apt.dockerproject.org/repo ubuntu-{{ ansible_distribution_release }} main'
+        state=present
 
-  - name: Add ServerAlias to ruby_hw.conf
-    lineinfile: dest=/etc/httpd/conf.d/ruby_hw.conf insertafter="ServerName" line="    ServerAlias {{ansible_default_ipv4.address}}"
-    notify:
-      - reload apache
+  - name: Import the Docker repository key
+    apt_key:
+        url=https://apt.dockerproject.org/gpg
+        state=present
+        id=2C52609D
 
-  - name: Get project from git
-    git: clone=yes dest=/var/www/ruby_hw repo=https://github.com/rstarmer/ruby_hw version=travisci
+  - name: Install Docker package
+    apt:
+        name=docker-engine
+        update_cache=yes
 
-  - name: Ensure .ssh director for web user
-    file: state=directory owner=web recurse=yes path=/home/web/.ssh mode=0700
-
-  - name: Add ssh public key for travis-CI deployment
-    shell: cat /var/www/ruby_hw/travis.pub >> /home/web/.ssh/authorized_keys
-
-  - name: Ensure authroized_keys for web user
-    file: state=file owner=web path=/home/web/.ssh/authorized_keys mode=0600
-
-  - name: change directory ownership
-    file: owner=web recurse=yes path=/var/www/ruby_hw
-    notify:
-      - reload apache
-
-
-  # requires ansible > 2.1
-  # - name: bundle install the required gem files
-  #   bundler: chdir=/var/www/ruby_hw state=present executable=/usr/local/bin/bundle deployment=yes
-
-  - name: Install via bundler
-    command: bundle install --deployment --without development test
-      chdir=/var/www/ruby_hw
-    become_user: web
-    notify:
-      - reload apache
+####
+  - name: application container
+    docker:
+      name: ruby-hw
+      image: rstarmer/ruby-hw
+      state: reloaded
+      pull: always
+      ports:
+      - "80:80"
+      - "22:2222"
