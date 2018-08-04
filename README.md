@@ -7,7 +7,7 @@ Tests are in rspec and we're testing with Codeship [ ![Codeship Status for rstar
 
 Testing is also going on in parallel with Travis [![Build Status](https://travis-ci.org/rstarmer/ruby_hw.svg?branch=master)](https://travis-ci.org/rstarmer/ruby_hw)
 
-The web page template is from Start Bootstrap:
+The web page template is from Start Bootstrap
 ---
 # [Start Bootstrap](http://startbootstrap.com/) - [Full](http://startbootstrap.com/template-overviews/full/)
 
