@@ -7,6 +7,6 @@ get '/:name' do
 end
 
 get '/' do
-  name="World"
+  @name="World"
   erb :index
 end
